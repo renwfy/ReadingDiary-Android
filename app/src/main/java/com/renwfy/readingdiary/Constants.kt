@@ -8,9 +8,5 @@ object Constants {
     var DEBUG: Boolean = BuildConfig.DEBUG
     val OS_TYPE = "android"
 
-    var QINIU_HOST = "http://oac4ul6pe.bkt.clouddn.com/"//七牛地址
-
-    var HOST = if (DEBUG) "http://renwfy.top" else "http://renwfy.top"
-    var BASE_URL = HOST + "/api"
-    var WEB_HOST = HOST + "/webapp"
+    var BASE_URL = if (DEBUG) "https://rike-api.moreless.io" else "https://rike-api.moreless.io"
 }

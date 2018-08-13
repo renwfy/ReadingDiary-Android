@@ -7,7 +7,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.renwfy.readingdiary"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -52,7 +52,7 @@ android {
         abortOnError false
     }
     kapt {
-        generateStubs = true
+        mapDiagnosticLocations = true
     }
     packagingOptions {
         exclude 'META-INF/LICENSE'
@@ -64,6 +64,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -71,11 +72,16 @@ dependencies {
 
     //butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
-    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    kapt "com.jakewharton:butterknife-compiler:8.8.1"
 
     implementation 'com.google.code.gson:gson:2.7'
     implementation 'com.zhy:okhttputils:2.6.2'
+    implementation 'com.yarolegovich:sliding-root-nav:1.1.0'//slidmenu
+    implementation "com.orhanobut:hawk:2.0.1"//shareperfarest存储
+    implementation ('cn.qqtheme.framework:WheelPicker:1.5.6') {
+        exclude group: 'com.android.support'
+    }
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
 
     implementation project(':lib')
     implementation project(':xdb')

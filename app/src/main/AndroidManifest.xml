@@ -5,20 +5,52 @@
     <application
         android:name=".IAppliction"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_rike"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.DiaryActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.DiaryDetailsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.DiaryNotificationActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.renwfy.dairy.Notification" />
+                <action android:name="android.intent.action.TIME_TICK" />
+            </intent-filter>
+        </receiver>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
-
 </manifest>

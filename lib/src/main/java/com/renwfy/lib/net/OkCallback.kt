@@ -24,5 +24,5 @@ abstract class OkCallback : Callback<String>() {
         return response.body().string()
     }
 
-    protected fun onHeader(headers: Map<String, String>) {}
+    protected open fun onHeader(headers: Map<String, String>) {}
 }

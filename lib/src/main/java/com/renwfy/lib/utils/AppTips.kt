@@ -22,7 +22,7 @@ object AppTips {
             return
         }
         val toast = Toast.makeText(context, content, Toast.LENGTH_SHORT)
-        toast.getView().getBackground().setAlpha(255);//设置透明度
+        toast.getView().getBackground().setAlpha(180);//设置透明度
         toast.show()
     }
 }

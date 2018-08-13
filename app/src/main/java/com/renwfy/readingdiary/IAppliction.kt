@@ -2,6 +2,7 @@ package com.renwfy.readingdiary
 
 import android.app.Application
 import android.content.Context
+import com.orhanobut.hawk.Hawk
 import com.renwfy.lib.NSApp
 import com.renwfy.lib.NSOptions
 import com.renwfy.lib.activity.ActivityManager
@@ -47,6 +48,8 @@ class IAppliction : Application() {
         NSApp.init(this, sysOptions())
         NSApp.setDebug(Constants.DEBUG)
         NSRequestManager.init(this, Constants.BASE_URL)
+
+        Hawk.init(this).build()//初始化存储
     }
 
     //app参数配置

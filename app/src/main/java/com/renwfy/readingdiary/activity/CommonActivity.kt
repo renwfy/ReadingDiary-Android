@@ -15,7 +15,7 @@ import com.renwfy.readingdiary.R
  */
 abstract class CommonActivity : AbstractActivity() {
     lateinit var container: LinearLayout
-    private var unbinder: Unbinder? = null
+    internal var unbinder: Unbinder? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +26,15 @@ abstract class CommonActivity : AbstractActivity() {
         if (0 != viewId) {
             val view = View.inflate(mActivity, viewId, null)
             setView(view)
+            unbinder = ButterKnife.bind(this,view)
         }
-        unbinder = ButterKnife.bind(this)
         onViewCreated()
     }
 
     override fun onDestroy() {
-        unbinder!!.unbind()
+        if(unbinder != null){
+            unbinder!!.unbind()
+        }
         super.onDestroy()
     }
 
@@ -42,7 +44,7 @@ abstract class CommonActivity : AbstractActivity() {
     }
 
     private fun initFrameLayout() {
-        container = findViewById(R.id.mContainer) as LinearLayout
+        container = findViewById(R.id.mContainer)
     }
 
     @LayoutRes

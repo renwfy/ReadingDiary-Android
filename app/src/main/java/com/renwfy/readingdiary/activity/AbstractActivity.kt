@@ -86,7 +86,7 @@ open class AbstractActivity : BaseActivity() {
             super.onBackPressed()
         } else {
             if (isfirstTime) {
-                AppTips.showToast(mActivity, "再按一次退出程序...")
+                AppTips.showToast(mActivity, "再按一次退出程序..")
                 isfirstTime = false
                 mHandler.postDelayed({ isfirstTime = true }, 3000)
             } else {

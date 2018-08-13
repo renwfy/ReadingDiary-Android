@@ -41,6 +41,7 @@ class DefaultRequest : NSRequest {
             OkHttpUtils.put().url(url).build().execute(callback)
         } else if (method === NSRequest.RequestMethod.DELETE) {
             OkHttpUtils.delete().url(url).build().execute(callback)
+            OkHttpUtils.post().build()
         }
         return this
     }

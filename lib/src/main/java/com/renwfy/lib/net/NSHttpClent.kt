@@ -31,6 +31,37 @@ open class NSHttpClent {
             return request.doRequest()
         }
 
+        fun post(url: String, pamas: Map<String, String>, callback: NSCallback<*>): NSRequest {
+            return post(url, null, pamas, callback)
+        }
+
+        fun post(url: String, headers: Map<String, String>?, pamas: Map<String, String>, callback: NSCallback<*>): NSRequest {
+            var pamas = pamas
+            pamas = addParams(pamas)
+            val request = DefaultRequest(NSRequest.RequestMethod.POST, if (url.contains("http")) url else BASE_URL + url, callback)
+            request.params = pamas
+            request.headers = setHeader(headers)
+            return request.doRequest()
+        }
+
+        fun put(url: String, pamas: Map<String, String>, callback: NSCallback<*>): NSRequest {
+            var url = url
+            var pamas = pamas
+            pamas = addParams(pamas)
+            url = buildUrl(url, pamas)
+            val request = DefaultRequest(NSRequest.RequestMethod.PUT, if (url.contains("http")) url else BASE_URL + url, callback)
+            return request.doRequest()
+        }
+
+        fun delete(url: String, pamas: Map<String, String>, callback: NSCallback<*>): NSRequest {
+            var url = url
+            var pamas = pamas
+            pamas = addParams(pamas)
+            url = buildUrl(url, pamas)
+            val request = DefaultRequest(NSRequest.RequestMethod.DELETE, if (url.contains("http")) url else BASE_URL + url, callback)
+            return request.doRequest()
+        }
+
         private fun addParams(params: Map<String, String>?): Map<String, String> {
             var params = params
             if (params == null) {
@@ -57,11 +88,14 @@ open class NSHttpClent {
                     encodedParams.append(URLEncoder.encode(value, "utf-8"))
                     encodedParams.append('&')
                 }
-                return url + "?" + encodedParams.toString()
+                if (encodedParams.length > 0) {
+                    return url + "?" + encodedParams.toString()
+                } else {
+                    return url
+                }
             } catch (e: Exception) {
                 AppLog.e(Tag, e.message)
             }
-
             return url
         }
     }
