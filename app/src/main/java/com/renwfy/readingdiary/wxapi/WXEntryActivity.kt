@@ -19,8 +19,8 @@ class WXEntryActivity : CommonActivity(), IWXAPIEventHandler {
 
     override fun onViewCreated() {
         super.onViewCreated()
-        api = WXAPIFactory.createWXAPI(this, "APP_ID", false)
-        api!!.registerApp("APP_ID")
+        api = WXAPIFactory.createWXAPI(this, "wxf03aa1d5c2536673", false)
+        api!!.registerApp("wxf03aa1d5c2536673")
 
         try {
             api!!.handleIntent(intent, this)

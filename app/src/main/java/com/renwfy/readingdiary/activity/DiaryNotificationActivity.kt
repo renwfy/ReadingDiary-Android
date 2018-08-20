@@ -1,8 +1,9 @@
 package com.renwfy.readingdiary.activity
 
 import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
-import android.widget.CompoundButton
+import android.content.Intent
 import android.widget.Switch
 import android.widget.TextView
 import butterknife.BindView
@@ -11,12 +12,7 @@ import butterknife.OnClick
 import cn.qqtheme.framework.picker.TimePicker
 import cn.qqtheme.framework.util.ConvertUtils
 import com.orhanobut.hawk.Hawk
-import com.renwfy.lib.utils.AppLog
 import com.renwfy.readingdiary.R
-import com.renwfy.readingdiary.MainActivity
-import android.app.PendingIntent
-import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
-import android.content.Intent
 import java.util.*
 
 

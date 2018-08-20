@@ -13,7 +13,7 @@ object Api : NSHttpClent() {
 
     //课文章
     fun getLessons(upadteData: String, callback: NSCallback<LessonEntity>) {
-        val url = Constants.BASE_URL + "/v1/lessons?from=20180101&to=20190726&updated_at=0"
+        val url = Constants.BASE_URL + "/v1/lessons?from=20180101&to=20190726&updated_at=1514736000"
         var pamas = HashMap<String, String>()
         get(url, pamas, callback)
     }

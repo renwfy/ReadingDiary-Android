@@ -8,9 +8,11 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.ScrollView;
 
 public class ViewToImageUtil {
     private static final int defaultWebPage = 6;
+
     public interface UtilCallback {
         void onSuccess(Bitmap bitmap);
 
@@ -24,7 +26,7 @@ public class ViewToImageUtil {
      */
     public static Bitmap webViewToBitmap(final Context context, final WebView webView) {
         if (context == null || webView == null) {
-            return  null;
+            return null;
         }
         int screenHeight = getScreenHeight(context);
         int MAXScreenshotHeight = defaultWebPage * screenHeight;
@@ -36,20 +38,20 @@ public class ViewToImageUtil {
         Bitmap bitmap = Bitmap.createBitmap(webView.getWidth(), webViewHeight, Bitmap.Config.RGB_565);
         Canvas canvas = new Canvas(bitmap);
         webView.draw(canvas);
-        return  bitmap;
+        return bitmap;
     }
 
-    public static Bitmap webViewToBitmap(final WebView webView){
+    public static Bitmap webViewToBitmap(final WebView webView) {
         webView.setDrawingCacheEnabled(true);
         webView.buildDrawingCache();
         Picture snapShot = webView.capturePicture();
-        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(),snapShot.getHeight(), Bitmap.Config.RGB_565);
+        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(), snapShot.getHeight(), Bitmap.Config.RGB_565);
         Canvas canvas = new Canvas(bmp);
         snapShot.draw(canvas);
         canvas.save();
         canvas.restore();
         webView.destroyDrawingCache();
-        return  bmp;
+        return bmp;
     }
 
 
@@ -74,7 +76,7 @@ public class ViewToImageUtil {
         int height = view.getMeasuredHeight();
 
         view.layout(0, 0, width, height);
-        Bitmap bitmap = Bitmap.createBitmap(width,height, Bitmap.Config.RGB_565);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         Canvas c = new Canvas(bitmap);
 
         view.draw(c);
@@ -85,6 +87,21 @@ public class ViewToImageUtil {
         view.setDrawingCacheEnabled(true);
         Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
         view.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
+    public static Bitmap scrollViewToBitmap(ScrollView scrollView) {
+        int h = 0;
+        Bitmap bitmap;
+        // 获取recyclerview实际高度
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+        }
+        // 创建对应大小的bitmap
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
+                Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
         return bitmap;
     }
 

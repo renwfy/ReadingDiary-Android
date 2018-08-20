@@ -137,8 +137,12 @@ class PageFragment : NativeFragment() {
     @OnClick(R.id.ivShare)
     fun share(){
         llBottomBar.visibility = View.INVISIBLE
-        var bitmap = ViewToImageUtil.viewToBitmap(scrollView)
+        llTitleRight.alpha = 0.0f
+        rlCtitleView.alpha = 1.0f
+        var bitmap = ViewToImageUtil.scrollViewToBitmap(scrollView)
         ShareDialog(mContext,bitmap).show()
         llBottomBar.visibility = View.VISIBLE
+        llTitleRight.alpha = 1.0f
+        rlCtitleView.alpha = 0.0f
     }
 }
