@@ -41,10 +41,13 @@ object Api : NSHttpClent() {
         delete(url, pamas, callback)
     }
 
-    fun likeStatus(lessonId:String,callback: NSCallback<SuccessComm>){
+    //收藏状态
+    fun likeStatus(lessonId: String, userId: String, callback: NSCallback<SuccessComm>) {
         val url = "/v1/lessons/like"
         var pamas = HashMap<String, String>()
-        pamas["lessonId"] =
+        pamas["lessonId"] = lessonId
+        pamas["userId"] = userId
+        get(url, pamas, callback)
     }
 
     //登陆
