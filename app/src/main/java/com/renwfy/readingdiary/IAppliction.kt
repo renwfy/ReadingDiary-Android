@@ -2,6 +2,7 @@ package com.renwfy.readingdiary
 
 import android.app.Application
 import android.content.Context
+import android.text.TextUtils
 import com.orhanobut.hawk.Hawk
 import com.renwfy.lib.NSApp
 import com.renwfy.lib.NSOptions
@@ -22,6 +23,10 @@ class IAppliction : Application() {
 
         fun getAppliction(): IAppliction {
             return instance
+        }
+
+        fun isLogin(): Boolean {
+            return instance.getUser() != null && !TextUtils.isEmpty(instance.getUser()!!._id)
         }
 
         //退出
@@ -63,5 +68,13 @@ class IAppliction : Application() {
 
     fun getUser(): User? {
         return session.getUser()
+    }
+
+    fun saveUser(user: User) {
+        session.saveUser(user)
+    }
+
+    fun logou() {
+        session.logout()
     }
 }

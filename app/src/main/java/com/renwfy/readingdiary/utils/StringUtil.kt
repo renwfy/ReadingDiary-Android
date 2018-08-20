@@ -1,6 +1,7 @@
 package com.renwfy.readingdiary.utils
 
 import java.text.SimpleDateFormat
+import java.util.regex.Pattern
 
 /**
  * Created by LSD on 2018/7/26.
@@ -40,7 +41,7 @@ object StringUtil {
 
     fun intToNum(x: Int): String {
         val stringNames = arrayOf("零", "一", "二", "三", "四", "五", "六", "七", "八", "九")
-        val intNames = arrayOf(0, 1, 2,3, 4, 5, 6, 7, 8, 9)
+        val intNames = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         return stringNames[intNames.indexOf(x)]
     }
 
@@ -53,4 +54,10 @@ object StringUtil {
         }
         return buffer.toString()
     }
+
+    fun isPhoneNumber(phone: String): Boolean {
+        val p = Pattern.compile("^1\\d{10}$")
+        return p.matcher(phone).matches()
+    }
+
 }

@@ -13,6 +13,7 @@ import butterknife.OnClick
 import com.google.gson.Gson
 import com.renwfy.lib.net.NSCallback
 import com.renwfy.lib.utils.AppLog
+import com.renwfy.readingdiary.IAppliction
 import com.renwfy.readingdiary.R
 import com.renwfy.readingdiary.api.Api
 import com.renwfy.readingdiary.model.LessonEntity
@@ -54,7 +55,7 @@ class PageFragment : NativeFragment() {
     @BindView(R.id.tvReply)
     lateinit var tvReply: TextView
     @BindView(R.id.llBottomBar)
-    lateinit var llBottomBar:LinearLayout
+    lateinit var llBottomBar: LinearLayout
 
     internal var shades = ColorShades()
 
@@ -77,7 +78,14 @@ class PageFragment : NativeFragment() {
         }
         initView()
         setData()
-        //getStatus()
+        getStatus()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(IAppliction.isLogin()){
+
+        }
     }
 
     override fun getContentView(): Int {
@@ -123,9 +131,8 @@ class PageFragment : NativeFragment() {
     fun getStatus() {
         if (lesson != null) {
             Api.getActivityStats(lesson!!.date_by_day.toString(), object : NSCallback<StatsEntity>(mContext, StatsEntity::class.java) {
-                override fun onResponse(response: String?, id: Int) {
-                    if (!TextUtils.isEmpty(response)) {
-                        var t: StatsEntity = Gson().fromJson(response, StatsEntity::class.java)
+                override fun onSuccess(t: StatsEntity?) {
+                    if (t != null) {
                         tvLike.text = if (t.favourite_count > 0) "${t.favourite_count}" else ""
                         tvReply.text = if (t.comment_count > 0) "${t.comment_count}" else ""
                     }
@@ -135,14 +142,19 @@ class PageFragment : NativeFragment() {
     }
 
     @OnClick(R.id.ivShare)
-    fun share(){
+    fun share() {
         llBottomBar.visibility = View.INVISIBLE
         llTitleRight.alpha = 0.0f
         rlCtitleView.alpha = 1.0f
         var bitmap = ViewToImageUtil.scrollViewToBitmap(scrollView)
-        ShareDialog(mContext,bitmap).show()
+        ShareDialog(mContext, bitmap).show()
         llBottomBar.visibility = View.VISIBLE
         llTitleRight.alpha = 1.0f
         rlCtitleView.alpha = 0.0f
+    }
+
+    @OnClick(R.id.tvLike)
+    fun like() {
+
     }
 }

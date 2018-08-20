@@ -27,16 +27,11 @@ class SplashActivity : CommonActivity() {
     }
 
     fun preLoad() {
-        Api.getLessons("", object : NSCallback<LessonEntity>(mActivity, LessonEntity::class.java) {
-            override fun onResponse(response: String?, id: Int) {
-                if (!TextUtils.isEmpty(response)) {
-                    val type = object : TypeToken<ArrayList<LessonEntity>>() {}.type
-                    val rs = Gson().fromJson<List<LessonEntity>>(response, type)
-                    DataFactory.lessonData = rs
-
-                    startActivity(Intent(mActivity, MainActivity::class.java))
-                    finish()
-                }
+        Api.getLessons(object : NSCallback<LessonEntity>(mActivity, LessonEntity::class.java) {
+            override fun onSuccess(t: List<LessonEntity>, total: Int) {
+                DataFactory.lessonData = t
+                startActivity(Intent(mActivity, MainActivity::class.java))
+                finish()
             }
         })
     }

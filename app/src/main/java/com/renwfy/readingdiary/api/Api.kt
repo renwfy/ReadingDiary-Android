@@ -12,8 +12,8 @@ import com.renwfy.readingdiary.model.*
 object Api : NSHttpClent() {
 
     //课文章
-    fun getLessons(upadteData: String, callback: NSCallback<LessonEntity>) {
-        val url = Constants.BASE_URL + "/v1/lessons?from=20180101&to=20190726&updated_at=1514736000"
+    fun getLessons(callback: NSCallback<LessonEntity>) {
+        val url = "/v1/lessons"
         var pamas = HashMap<String, String>()
         get(url, pamas, callback)
     }
@@ -21,32 +21,38 @@ object Api : NSHttpClent() {
 
     //获取点赞数
     fun getActivityStats(dateString: String, callback: NSCallback<StatsEntity>) {
-        val url = Constants.BASE_URL + "/v1/lessons/" + dateString + "/activity_stats"
+        val url = "/v1/lessons/activity_stats"
         var pamas = HashMap<String, String>()
+        pamas["date_by_day"] = dateString
         get(url, pamas, callback)
     }
 
     //添加点赞数
     fun addFavor(callback: NSCallback<SuccessComm>) {
-        val url = Constants.BASE_URL + "/v1/lessons/" + "" + "/activity_stats"
+        val url = "/v1/lessons/" + "" + "/activity_stats"
         var pamas = HashMap<String, String>()
         put(url, pamas, callback)
     }
 
     //删除点赞数
     fun deleteFavor(callback: NSCallback<SuccessComm>) {
-        val url = Constants.BASE_URL + "/v1/lessons/" + "" + "/activity_stats"
+        val url = "/v1/lessons/" + "" + "/activity_stats"
         var pamas = HashMap<String, String>()
         delete(url, pamas, callback)
     }
 
-    //登陆
-    fun login(callback: NSCallback<User>) {
-        val url = Constants.BASE_URL + "/v1/login"
+    fun likeStatus(lessonId:String,callback: NSCallback<SuccessComm>){
+        val url = "/v1/lessons/like"
         var pamas = HashMap<String, String>()
-        pamas["nation_code"] = "86"
-        pamas["phone_number"] = "18662430879"
-        pamas["password"] = "123456"
+        pamas["lessonId"] =
+    }
+
+    //登陆
+    fun login(phone: String, pass: String, callback: NSCallback<User>) {
+        val url = "/v1/user"
+        var pamas = HashMap<String, String>()
+        pamas["phone"] = phone
+        pamas["pass"] = pass
         post(url, pamas, callback)
     }
 
