@@ -51,6 +51,7 @@ class LoginActivity : CommonActivity() {
         Api.login(phone, pass, object : NSCallback<User>(mActivity, User::class.java) {
             override fun onSuccess(t: User?) {
                 if (t != null) {
+                    AppTips.showToast("登陆成功")
                     IAppliction.instance.saveUser(t)
                 }
                 finish()

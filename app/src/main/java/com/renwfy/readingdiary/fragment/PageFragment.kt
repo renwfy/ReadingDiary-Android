@@ -1,5 +1,6 @@
 package com.renwfy.readingdiary.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -15,9 +16,12 @@ import com.renwfy.lib.net.NSCallback
 import com.renwfy.lib.utils.AppLog
 import com.renwfy.readingdiary.IAppliction
 import com.renwfy.readingdiary.R
+import com.renwfy.readingdiary.activity.LoginActivity
 import com.renwfy.readingdiary.api.Api
 import com.renwfy.readingdiary.model.LessonEntity
+import com.renwfy.readingdiary.model.LikeEntity
 import com.renwfy.readingdiary.model.StatsEntity
+import com.renwfy.readingdiary.model.SuccessComm
 import com.renwfy.readingdiary.utils.ColorShades
 import com.renwfy.readingdiary.utils.StringUtil
 import com.renwfy.readingdiary.utils.ViewToImageUtil
@@ -60,6 +64,7 @@ class PageFragment : NativeFragment() {
     internal var shades = ColorShades()
 
     var lesson: LessonEntity? = null
+    var isLike = false
 
     companion object {
         fun getInstance(lesson: LessonEntity?): Fragment {
@@ -83,8 +88,10 @@ class PageFragment : NativeFragment() {
 
     override fun onResume() {
         super.onResume()
-        if(IAppliction.isLogin()){
-
+        if (IAppliction.isLogin()) {
+            if (lesson != null) {
+                getIsLike()
+            }
         }
     }
 
@@ -114,6 +121,15 @@ class PageFragment : NativeFragment() {
         })
     }
 
+    private fun setDrawable(isLike: Boolean) {
+        var drawable = resources.getDrawable(R.drawable.ic_like1)
+        if (isLike) {
+            drawable = resources.getDrawable(R.drawable.ic_like2)
+        }
+        drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+        tvLike.setCompoundDrawables(drawable, null, null, null)
+    }
+
     fun setData() {
         if (lesson != null) {
             val dateString = StringUtil.toDateStringCN(lesson!!.date_by_day.toString())
@@ -141,6 +157,17 @@ class PageFragment : NativeFragment() {
         }
     }
 
+    fun getIsLike() {
+        Api.likeStatus(lesson!!.id, IAppliction.instance.getUser()!!._id!!, object : NSCallback<LikeEntity>(mContext, LikeEntity::class.java) {
+            override fun onSuccess(t: LikeEntity?) {
+                if (t != null) {
+                    isLike = (t.status == 1)
+                    setDrawable(isLike)
+                }
+            }
+        })
+    }
+
     @OnClick(R.id.ivShare)
     fun share() {
         llBottomBar.visibility = View.INVISIBLE
@@ -155,6 +182,24 @@ class PageFragment : NativeFragment() {
 
     @OnClick(R.id.tvLike)
     fun like() {
-
+        if (!IAppliction.isLogin()) {
+            startActivity(Intent(mContext, LoginActivity::class.java))
+            return
+        }
+        var status: Int
+        if (isLike) {
+            status = 0
+        } else {
+            status = 1
+        }
+        Api.doFavor(lesson!!.id, IAppliction.instance.getUser()!!._id!!, "${lesson!!.date_by_day}", "$status", object : NSCallback<LikeEntity>(mContext, LikeEntity::class.java) {
+            override fun onSuccess(t: LikeEntity?) {
+                if (t != null) {
+                    isLike = (t.status == 1)
+                    setDrawable(isLike)
+                    getStatus()
+                }
+            }
+        })
     }
 }

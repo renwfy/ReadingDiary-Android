@@ -27,28 +27,26 @@ object Api : NSHttpClent() {
         get(url, pamas, callback)
     }
 
-    //添加点赞数
-    fun addFavor(callback: NSCallback<SuccessComm>) {
-        val url = "/v1/lessons/" + "" + "/activity_stats"
-        var pamas = HashMap<String, String>()
-        put(url, pamas, callback)
-    }
-
-    //删除点赞数
-    fun deleteFavor(callback: NSCallback<SuccessComm>) {
-        val url = "/v1/lessons/" + "" + "/activity_stats"
-        var pamas = HashMap<String, String>()
-        delete(url, pamas, callback)
-    }
-
     //收藏状态
-    fun likeStatus(lessonId: String, userId: String, callback: NSCallback<SuccessComm>) {
+    fun likeStatus(lessonId: String, userId: String, callback: NSCallback<LikeEntity>) {
         val url = "/v1/lessons/like"
         var pamas = HashMap<String, String>()
         pamas["lessonId"] = lessonId
         pamas["userId"] = userId
         get(url, pamas, callback)
     }
+
+    //添加删除点赞
+    fun doFavor(lessonId: String, userId: String, date_by_day: String, status: String, callback: NSCallback<LikeEntity>) {
+        val url = "/v1/lessons/like"
+        var pamas = HashMap<String, String>()
+        pamas["lessonId"] = lessonId
+        pamas["userId"] = userId
+        pamas["date_by_day"] = date_by_day
+        pamas["status"] = status
+        post(url, pamas, callback)
+    }
+
 
     //登陆
     fun login(phone: String, pass: String, callback: NSCallback<User>) {

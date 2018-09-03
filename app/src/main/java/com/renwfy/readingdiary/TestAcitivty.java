@@ -1,6 +1,7 @@
 package com.renwfy.readingdiary;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 
@@ -112,5 +113,11 @@ public class TestAcitivty extends CommonActivity {
 
         List<String> aga = new ArrayList<>();
 
+    }
+
+    private void setDrawable(){
+        Drawable rightDrawable = getResources().getDrawable(R.drawable.ic_like1);
+        rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());
+       // tvVersionStatus.setCompoundDrawables(null, null, rightDrawable, null);
     }
 }
