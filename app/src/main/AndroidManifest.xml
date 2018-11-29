@@ -37,6 +37,9 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ViewsActivity"
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".wxapi.WXEntryActivity"

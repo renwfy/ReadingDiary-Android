@@ -17,6 +17,7 @@ import com.renwfy.lib.utils.AppLog
 import com.renwfy.readingdiary.IAppliction
 import com.renwfy.readingdiary.R
 import com.renwfy.readingdiary.activity.LoginActivity
+import com.renwfy.readingdiary.activity.ViewsActivity
 import com.renwfy.readingdiary.api.Api
 import com.renwfy.readingdiary.model.LessonEntity
 import com.renwfy.readingdiary.model.LikeEntity
@@ -158,10 +159,10 @@ class PageFragment : NativeFragment() {
     }
 
     fun getIsLike() {
-        Api.likeStatus(lesson!!.id, IAppliction.instance.getUser()!!._id!!, object : NSCallback<LikeEntity>(mContext, LikeEntity::class.java) {
+        Api.likeStatus(lesson!!.id, IAppliction.instance.getUser()!!.id!!, object : NSCallback<LikeEntity>(mContext, LikeEntity::class.java) {
             override fun onSuccess(t: LikeEntity?) {
                 if (t != null) {
-                    isLike = (t.status == 1)
+                    isLike = t.status
                     setDrawable(isLike)
                 }
             }
@@ -186,20 +187,23 @@ class PageFragment : NativeFragment() {
             startActivity(Intent(mContext, LoginActivity::class.java))
             return
         }
-        var status: Int
-        if (isLike) {
-            status = 0
-        } else {
-            status = 1
-        }
-        Api.doFavor(lesson!!.id, IAppliction.instance.getUser()!!._id!!, "${lesson!!.date_by_day}", "$status", object : NSCallback<LikeEntity>(mContext, LikeEntity::class.java) {
+        Api.doFavor(lesson!!.id, IAppliction.instance.getUser()!!.id!!, "${lesson!!.date_by_day}", "${!isLike}", object : NSCallback<LikeEntity>(mContext, LikeEntity::class.java) {
             override fun onSuccess(t: LikeEntity?) {
                 if (t != null) {
-                    isLike = (t.status == 1)
+                    isLike = t.status
                     setDrawable(isLike)
                     getStatus()
                 }
             }
         })
+    }
+
+    @OnClick(R.id.tvReply)
+    fun comment() {
+        if (!IAppliction.isLogin()) {
+            startActivity(Intent(mContext, LoginActivity::class.java))
+            return
+        }
+        startActivity(Intent(mContext, ViewsActivity::class.java).putExtra("lesson", lesson));
     }
 }

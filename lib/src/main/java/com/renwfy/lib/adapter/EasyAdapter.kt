@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import butterknife.ButterKnife
-import java.util.*
 
 open abstract class EasyAdapter<T> : BaseAdapter {
     protected var context: Context
@@ -27,12 +26,12 @@ open abstract class EasyAdapter<T> : BaseAdapter {
         this.notifyDataSetChanged()
     }
 
-    fun addData(data: List<T>?) {
+    fun addData(data: MutableList<T>?) {
         if (this.list == null) {
             this.list = ArrayList()
         }
         if (data != null) {
-            this.list!!.addAll(data)
+            //this.list.
             this.notifyDataSetChanged()
         }
     }
@@ -65,17 +64,15 @@ open abstract class EasyAdapter<T> : BaseAdapter {
 
     abstract fun getHolder(type: Int): EasyHolder
 
-    open abstract inner class EasyHolder(context: Context) {
+    open abstract inner class EasyHolder {
         var convertView: View
 
-        @get:LayoutRes
-        abstract val layout: Int
-
         init {
-            convertView = LayoutInflater.from(context).inflate(layout, null)
+            convertView = LayoutInflater.from(context).inflate(getLayout(), null)
             ButterKnife.bind(this, convertView)
         }
 
         abstract fun setData(position: Int, data: T?)
+        abstract fun getLayout(): Int
     }
 }

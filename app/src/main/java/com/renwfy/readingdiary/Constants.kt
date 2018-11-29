@@ -8,5 +8,5 @@ object Constants {
     var DEBUG: Boolean = BuildConfig.DEBUG
     val OS_TYPE = "android"
 
-    var BASE_URL = if (DEBUG) "http://10.0.2.2:3004/api" else "http://renwfy.top:3004/api"
+    var BASE_URL = if (DEBUG) "http://192.168.41.183:3004/api" else "https://lesson.fiz.ink/api"//10.0.2.2
 }

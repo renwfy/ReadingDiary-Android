@@ -26,7 +26,7 @@ class IAppliction : Application() {
         }
 
         fun isLogin(): Boolean {
-            return instance.getUser() != null && !TextUtils.isEmpty(instance.getUser()!!._id)
+            return instance.getUser() != null && !TextUtils.isEmpty(instance.getUser()!!.id)
         }
 
         //退出

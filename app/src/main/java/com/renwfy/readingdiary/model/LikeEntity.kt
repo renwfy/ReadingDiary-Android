@@ -5,6 +5,6 @@ package com.renwfy.readingdiary.model
  * Desc
  */
 class LikeEntity {
-    var lessonId: String? = null
-    var status = 0
+    var lessonId: String = ""
+    var status: Boolean = false
 }

@@ -5,7 +5,7 @@ package com.renwfy.readingdiary.model
  * Desc
  */
 class User {
-    var _id: String? = null
+    var id: String? = null
     var nickname: String? = null
     var phone: String? = null
     var avatar: String? = null

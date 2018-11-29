@@ -29,7 +29,7 @@ object Api : NSHttpClent() {
 
     //收藏状态
     fun likeStatus(lessonId: String, userId: String, callback: NSCallback<LikeEntity>) {
-        val url = "/v1/lessons/like"
+        val url = "/v1/lessons/favor"
         var pamas = HashMap<String, String>()
         pamas["lessonId"] = lessonId
         pamas["userId"] = userId
@@ -38,7 +38,7 @@ object Api : NSHttpClent() {
 
     //添加删除点赞
     fun doFavor(lessonId: String, userId: String, date_by_day: String, status: String, callback: NSCallback<LikeEntity>) {
-        val url = "/v1/lessons/like"
+        val url = "/v1/lessons/favor"
         var pamas = HashMap<String, String>()
         pamas["lessonId"] = lessonId
         pamas["userId"] = userId
@@ -57,4 +57,26 @@ object Api : NSHttpClent() {
         post(url, pamas, callback)
     }
 
+
+    //评论
+    fun comentList(userId: String, lesson_id: String, start: Int, size: Int, callback: NSCallback<CommentEntity>) {
+        val url = "/v1/comments"
+        var pamas = HashMap<String, String>()
+        pamas["userId"] = userId
+        pamas["lesson_id"] = lesson_id
+        pamas["start"] = "$start"
+        pamas["size"] = "$size"
+        get(url, pamas, callback)
+    }
+
+
+    //评论点赞
+    fun comentLike(userId: String, comment_id: String, status: Boolean, callback: NSCallback<SuccessComm>) {
+        val url = "/v1/comment_like"
+        var pamas = HashMap<String, String>()
+        pamas["userId"] = userId
+        pamas["comment_id"] = comment_id
+        pamas["status"] = "$status"
+        post(url, pamas, callback)
+    }
 }
